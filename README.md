@@ -23,7 +23,7 @@
    python3 -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu111/torch1.10/index.html
    ```
 
-## Prepare
+## Prepare (Before Train or Inference)
 
 1. [Download](https://drive.google.com/file/d/1nEJ7NTtHcCHNQqUXaoPk55VH3Uwh4QGG/view?usp=sharing) the dataset.zip (72
    MB), unzip it, and move it in the repo root path. The structure will be:
@@ -71,7 +71,7 @@
    ```
 
 4. Make augmentation data: follow the instruction of `make_augmentation_data.ipynb` and run all the cells. Augmentation
-   data will be produced and saved in "aug/".
+   data will be produced and saved in "aug/". (If you want to inference only, this part can be skipped.)
 
 ## Train
 
