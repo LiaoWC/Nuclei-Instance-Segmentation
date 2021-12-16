@@ -62,5 +62,9 @@ for test_img_dict in test_img_ids:
         results.append(result)
 
 os.makedirs("./pred", exist_ok=True)
-with open(f'./pred/pred_{datetime.now().strftime("%Y-%m%d-%H%M%S")}.json', 'w') as f:
+filename = f'./pred/pred_{datetime.now().strftime("%Y-%m%d-%H%M%S")}.json'
+with open(filename, 'w') as f:
     json.dump(results, f)
+
+print("------------- Done ---------------")
+print("Prediction file is saved:", filename)

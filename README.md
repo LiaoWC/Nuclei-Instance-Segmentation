@@ -4,11 +4,11 @@
 [image source](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8363604)
 
 ## Install
-1. Install packages (ignore detectron2 error in this part)
+1. Install PyTorch
    ```shell
-   pip3 install -r requirements.txt
+   pip3 install torch # if you haven't installed it
    ```
-3. Install detectron2
+2. Install detectron2
    ```shell
    # See your PyTorch version
    python3 -c "import torch; print(torch.__version__)"
@@ -22,6 +22,13 @@
    # then you can:
    python3 -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu111/torch1.10/index.html
    ```
+3. Install other packages
+   ```shell
+   pip3 install torchvision
+   
+   pip3 install opencv-python
+   ```
+
 
 ## Prepare (Before Train or Inference)
 
