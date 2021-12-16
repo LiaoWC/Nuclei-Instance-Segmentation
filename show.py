@@ -35,7 +35,8 @@ cfg.TEST.DETECTIONS_PER_IMAGE = 3000  # You can modify this
 cfg.DATASETS.TEST = ("nuclei_test",)
 predictor = DefaultPredictor(cfg)
 
-# dataset_dicts = get_microcontroller_dicts('Microcontroller Segmentation/test')
+# dataset_dicts = get_microcontroller_dicts(
+# 'Microcontroller Segmentation/test')
 dd = 'test'
 with open(f'dataset/nuclei_{dd}_dataset.json', 'r') as f:
     ddd = json.load(f)['images']
@@ -47,7 +48,8 @@ for d in ddd:
     v = Visualizer(im[:, :, ::-1],
                    metadata={},
                    scale=0.8,
-                   instance_mode=ColorMode.IMAGE_BW  # remove the colors of unsegmented pixels
+                   # remove the colors of unsegmented pixels
+                   instance_mode=ColorMode.IMAGE_BW
                    )
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     plt.figure(figsize=(14, 10))

@@ -14,9 +14,10 @@ def get_contours(img_path: str):
     im = cv2.imread(img_path)
     imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    # im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    contours = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[0]
-    contours = [contour.reshape(contour.shape[0], -1).astype('int') for contour in contours]
+    contours = cv2.findContours(thresh, cv2.RETR_TREE,
+                                cv2.CHAIN_APPROX_SIMPLE)[0]
+    contours = [contour.reshape(contour.shape[0], -1).astype('int') for
+                contour in contours]
     return contours
 
 
@@ -49,14 +50,18 @@ os.makedirs('dataset/valid_images', exist_ok=True)
 train_images = []
 valid_images = []
 for image_id, name in enumerate(names):
-    im = cv2.imread(os.path.join('dataset', 'train', name, 'images', f'{name}.png'))
+    im = cv2.imread(os.path.join('dataset', 'train', name,
+                                 'images', f'{name}.png'))
     h, w = im.shape[0], im.shape[1]
-    image_dict = {'id': image_id, 'file_name': f'{name}.png', 'height': h, 'width': w}
+    image_dict = {'id': image_id, 'file_name': f'{name}.png',
+                  'height': h, 'width': w}
     if image_id <= MAX_IMG_ID - N_VALID:
-        cv2.imwrite(os.path.join('dataset', 'train_images', f'{name}.png'), im)
+        cv2.imwrite(os.path.join('dataset', 'train_images', f'{name}.png'),
+                    im)
         train_images.append(image_dict)
     else:
-        cv2.imwrite(os.path.join('dataset', 'valid_images', f'{name}.png'), im)
+        cv2.imwrite(os.path.join('dataset', 'valid_images', f'{name}.png'),
+                    im)
         valid_images.append(image_dict)
 
 # Annotations
@@ -64,7 +69,8 @@ train_annotation_dicts = []
 valid_annotation_dicts = []
 ann_id = 0
 for img_id, name in tqdm(enumerate(names), total=len(names)):
-    for root, dirs, files in os.walk(os.path.join('dataset', 'train', name, 'masks')):
+    for root, dirs, files in os.walk(os.path.join('dataset',
+                                                  'train', name, 'masks')):
         # For each mask
         for file in files:
             img_path = os.path.join(root, file)
@@ -77,13 +83,15 @@ for img_id, name in tqdm(enumerate(names), total=len(names)):
             w = max_x - min_x
             h = max_y - min_y
             # Segmentation
-            segmentation_contours = [list(map(int, list(contour.flatten()))) for contour in contours]
+            segmentation_contours = [list(map(int, list(contour.flatten()))) for
+                                     contour in contours]
             # For debug plotting
             # im = cv2.imread(img_path)
             # im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
             # im = np.zeros_like(im)
             # im = cv2.drawContours(im, contours, -1, (255, 255, 255), 2)
-            # im = cv2.rectangle(im, (min_x, min_y), (min_x + w, min_y + h), (255, 0, 0), 2)
+            # im = cv2.rectangle(im, (min_x, min_y),
+            # (min_x + w, min_y + h), (255, 0, 0), 2)
             # plt.imshow(im)
             # plt.show()
             # Make annotation
@@ -102,7 +110,8 @@ for img_id, name in tqdm(enumerate(names), total=len(names)):
                 valid_annotation_dicts.append(annotation)
 
 # Make train & valid dataset json files
-train_dataset = {'images': train_images, 'annotations': train_annotation_dicts,
+train_dataset = {'images': train_images,
+                 'annotations': train_annotation_dicts,
                  "info": {
                      "description": "VRDL hw3",
                      "url": "",
@@ -114,7 +123,8 @@ train_dataset = {'images': train_images, 'annotations': train_annotation_dicts,
                  "licenses": [],
                  
                  'categories': [{'id': 1, 'name': 'nuclei'}]}
-valid_dataset = {'images': valid_images, 'annotations': valid_annotation_dicts,
+valid_dataset = {'images': valid_images,
+                 'annotations': valid_annotation_dicts,
                  'categories': [{'id': 1, 'name': 'nuclei'}]}
 with open('dataset/nuclei_train_dataset.json', 'w') as f:
     json.dump(train_dataset, f)
@@ -127,11 +137,13 @@ for root, dirs, files in os.walk('dataset/test'):
     for i, file in enumerate(files):
         im = cv2.imread(os.path.join(root, file))
         h, w = im.shape[0], im.shape[1]
-        image_dict = {'id': MAX_IMG_ID + i + 1, 'file_name': file, 'height': h, 'width': w}
+        image_dict = {'id': MAX_IMG_ID + i + 1,
+                      'file_name': file, 'height': h, 'width': w}
         test_images.append(image_dict)
     # test_images += files
     break
-test_dataset = {'images': test_images, 'categories': [{'id': 1, 'name': 'nuclei'}]}
+test_dataset = {'images': test_images,
+                'categories': [{'id': 1, 'name': 'nuclei'}]}
 with open('dataset/nuclei_test_dataset.json', 'w') as f:
     json.dump(test_dataset, f)
 

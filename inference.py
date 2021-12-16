@@ -41,7 +41,8 @@ with open("dataset/test_img_ids.json", "r") as f:
 results = []
 for test_img_dict in test_img_ids:
     print(os.path.join(f'dataset/test_images', test_img_dict["file_name"]))
-    im = cv2.imread(os.path.join(f'dataset/test_images', test_img_dict["file_name"]))
+    im = cv2.imread(os.path.join(f'dataset/test_images',
+                                 test_img_dict["file_name"]))
     outputs = predictor(im)
     instances = outputs['instances']
 
@@ -56,7 +57,9 @@ for test_img_dict in test_img_ids:
             'category_id': 1,
             'segmentation': {
                 'size': [1000, 1000],
-                'counts': mask.encode(np.asfortranarray(pred_masks[i].cpu()))['counts'].decode('utf-8')
+                'counts': mask.encode(
+                    np.asfortranarray(
+                        pred_masks[i].cpu()))['counts'].decode('utf-8')
             }
         }
         results.append(result)
