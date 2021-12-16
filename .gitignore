@@ -1,0 +1,9 @@
+dataset.zip
+dataset/
+aug/
+output/
+other_ouptuts/
+pred/
+VENV/
+.idea/
+*.pth
