@@ -5,13 +5,15 @@
 
 ## Install
 1. Install packages (ignore detectron2 error in this part)
-2. Install detectron2
+   ```shell
+   pip3 install -r requirements.txt
+   ```
+3. Install detectron2
    ```shell
    # See your PyTorch version
    python3 -c "import torch; print(torch.__version__)"
    # See your Cuda version
    nvcc --version
-   #
    ```
    Refer to: https://detectron2.readthedocs.io/en/latest/tutorials/install.html
    Find the instruction for installing dectectron2 based on your Cuda and PyTorch version.
